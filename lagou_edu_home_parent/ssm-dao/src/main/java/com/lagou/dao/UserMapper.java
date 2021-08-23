@@ -62,4 +62,11 @@ public interface UserMapper {
     public void updateUserStatus2(@Param("id") int id, @Param("status")String status);
 
 
+    
+    
+    
+    
+    public void test11();
+    public void test21();
+    public void test31();
 }
