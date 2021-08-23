@@ -59,7 +59,7 @@ public interface UserMapper {
      */
     public void updateUserStatus(@Param("id") int id, @Param("status")String status);
     
-    public void updateUserStatus(@Param("id") int id, @Param("status")String status);
+    public void updateUserStatus2(@Param("id") int id, @Param("status")String status);
 
 
 }
