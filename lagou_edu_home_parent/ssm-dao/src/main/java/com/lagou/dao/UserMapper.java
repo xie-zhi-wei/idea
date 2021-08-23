@@ -58,15 +58,18 @@ public interface UserMapper {
      * 5.用户状态设置
      */
     public void updateUserStatus(@Param("id") int id, @Param("status")String status);
-    
+
+    /**
+     * 从远程仓库拉取下的代码
+     * @param id
+     * @param status
+     */
     public void updateUserStatus2(@Param("id") int id, @Param("status")String status);
 
+    public void test1();
+    public void test2();
+    public void test3();
 
-    
-    
-    
-    
-    public void test11();
-    public void test21();
-    public void test31();
+
+
 }
