@@ -58,5 +58,8 @@ public interface UserMapper {
      * 5.用户状态设置
      */
     public void updateUserStatus(@Param("id") int id, @Param("status")String status);
+    
+    public void updateUserStatus(@Param("id") int id, @Param("status")String status);
+
 
 }
