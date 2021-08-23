@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.dao.RoleMapper">
+<!-- 查询所有角色&条件查询   -->
+    <select id="findAllRole" parameterType="com.lagou.domain.Role" resultType="com.lagou.domain.Role">
+        select * from roles
+        <where>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+<!--根据角色id查询到关联的菜单id-->
+    <select id="findMenuByRoleId" parameterType="int" resultType="int">
+        SELECT m.`id`  FROM roles r INNER JOIN role_menu_relation rm ON r.`id` = rm.`role_id`
+	        INNER JOIN menu m ON m.`id` = rm.`menu_id` WHERE r.id = #{id}
+    </select>
+
+
+
+<!-- 根据roleid清空中间表的关联关系   -->
+   <delete id="deleteRoleContextMenu" parameterType="int">
+       delete  from role_menu_relation where role_id = #{id}
+   </delete>
+
+<!-- 为角色分配菜单关联   -->
+    <insert id="roleContextMenu" parameterType="com.lagou.domain.Role_menu_relation">
+        insert into role_menu_relation values(null,#{menuId},#{roleId},#{createdTime},#{updatedTime},#{createdBy},#{updatedby})
+    </insert>
+
+
+<!-- 删除角色   -->
+    <delete id="deleteRole" parameterType="int">
+        delete from roles where id = #{id};
+    </delete>
+
+
+
+    <!--1. 根据角色id查询当前角色所拥有的资源信息   -->
+    <select id="findResourceByRoleId" resultType="com.lagou.domain.Resource" parameterType="int">
+        SELECT r.*  FROM role_resource_relation rr INNER JOIN resource r ON rr.`resource_id` = r.`id` WHERE rr.`role_id` = #{id};
+    </select>
+
+    <!-- 2.查询当前角色拥有的资源分类信息   -->
+    <select id="findResourceCategoryByRoleId" resultType="com.lagou.domain.ResourceCategory" parameterType="int">
+        SELECT DISTINCT rc.* FROM  resource r INNER JOIN resource_category rc ON r.`category_id` = rc.`id`
+	INNER JOIN  role_resource_relation rr ON rr.`resource_id` = r.`id` WHERE rr.`role_id` = #{id}
+    </select>
+
+<!-- 清空当前角色对应的资源   -->
+    <delete id="deleteRoleResourceById" parameterType="int">
+        delete  from role_resource_relation where role_id = #{id}
+    </delete>
+
+<!-- 为角色重新分配资源信息   -->
+    <insert id="roleContextResource" parameterType="com.lagou.domain.RoleResourceRelation">
+        insert into role_resource_relation values (null,#{resourceId},#{roleId},#{createdTime},#{updatedTime},#{createdBy},#{updatedBy})
+
+    </insert>
+
+</mapper>
