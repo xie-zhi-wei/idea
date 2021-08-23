@@ -70,6 +70,16 @@ public interface UserMapper {
     public void test2();
     public void test3();
 
+    
+    
+    
+    
+    public void test11();
+    public void test21();
+    public void test31();
+    public void test11();
+    public void test21();
+    public void test31();
 
 
 }
